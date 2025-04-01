@@ -1,6 +1,6 @@
 from selene import browser, have, be, command
 
-def test_form():
+def test_form(setup_browser):
     browser.open('https://demoqa.com/automation-practice-form')
 
     # Заполнение формы
