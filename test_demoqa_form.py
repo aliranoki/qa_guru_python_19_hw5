@@ -1,3 +1,5 @@
+import os
+
 from selene import browser, have, be, command
 
 def test_form(setup_browser):
@@ -22,8 +24,8 @@ def test_form(setup_browser):
     browser.element('[for="hobbies-checkbox-1"]').should(be.clickable).click()
     browser.element('[for="hobbies-checkbox-2"]').should(be.clickable).click()
 
-    (browser.element('#uploadPicture').should(be.clickable)
-     .send_keys(r'C:\workspace_py\qa_guru_python_19_hw5\picture.png'))
+    browser.element('#uploadPicture').should(be.clickable).type(os.getcwd() + "/picture.png")
+
 
     browser.element('#currentAddress').should(be.visible).type('123 Main Street, Apt 4B, New York, NY 10001')
     browser.element('#state').click().element('#react-select-3-input').set_value('Rajasthan').press_tab()
