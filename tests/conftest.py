@@ -1,6 +1,8 @@
 import pytest
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.chrome.service import Service
+from webdriver_manager.chrome import ChromeDriverManager
 from selene import browser
 
 
@@ -11,14 +13,13 @@ def setup_browser():
     options.add_argument("--disable-dev-shm-usage")
     options.add_argument("--headless")
 
-    driver = webdriver.Chrome(options=options)
+    # Автоматическая установка ChromeDriver
+    service = Service(ChromeDriverManager().install())
+    driver = webdriver.Chrome(service=service, options=options)
 
-    # Настройка Selene
     browser.config.driver = driver
     browser.config.base_url = 'https://demoqa.com'
-    browser.config.timeout = 4.0  # Рекомендуется явно указать таймаут
+    browser.config.timeout = 4.0
 
-    yield browser  # Фикстура возвращает объект browser для использования в тестах
-
-    # Завершение работы после всех тестов
+    yield browser
     browser.quit()
